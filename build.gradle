@@ -4,6 +4,25 @@ repositories {
   mavenCentral()
 }
 
+sourceSets {
+  integrationTest {
+    java {
+      compileClasspath += main.output + test.output
+      runtimeClasspath += main.output + test.output + main.runtimeClasspath
+      srcDir file('src/integration-test/java')
+    }
+    resources.srcDir file('src/integration-test/resources')
+  }
+}
+
+task integrationTest(type: Test) {
+  testClassesDirs = sourceSets.integrationTest.output.classesDirs
+  classpath = sourceSets.integrationTest.runtimeClasspath
+  outputs.upToDateWhen { false }
+}
+
+integrationTest.mustRunAfter test
+
 dependencies {
   implementation group: "com.fasterxml.jackson.core", name: "jackson-core", version: "2.7.0"
   implementation group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.1.4"
@@ -11,5 +30,7 @@ dependencies {
   implementation group: "com.squareup.okhttp3", name: "okhttp", version: "3.14.0"
 
   testImplementation group: "junit", name: "junit", version: "4.12"
+
+  integrationTestImplementation group: "junit", name: "junit", version: "4.12"
 }
 
