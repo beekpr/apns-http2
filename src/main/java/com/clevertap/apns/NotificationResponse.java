@@ -30,6 +30,10 @@
 
 package com.clevertap.apns;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
 /**
  * A wrapper around possible responses from the push gateway.
  */
@@ -62,6 +66,16 @@ public class NotificationResponse {
      */
     public NotificationRequestError getError() {
         return error;
+    }
+
+    public NotificationErrorReason getReason() {
+        try {
+            return NotificationErrorReason.valueOf(new ObjectMapper().readTree(responseBody).get("reason").asText());
+        } catch (IOException e) {
+            throw new RuntimeException(String.format("Could not read reason for failure from apns response body [%s]", responseBody));
+        } catch(IllegalArgumentException e) {
+            return NotificationErrorReason.Unknown;
+        }
     }
 
     /**

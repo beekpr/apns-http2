@@ -1,0 +1,32 @@
+package com.clevertap.apns;
+
+public enum NotificationErrorReason {
+    BadCollapseId,
+    BadDeviceToken,
+    BadExpirationDate,
+    BadMessageId,
+    BadPriority,
+    BadTopic,
+    DeviceTokenNotForTopic,
+    DuplicateHeaders,
+    IdleTimeout,
+    MissingDeviceToken,
+    MissingTopic,
+    PayloadEmpty,
+    TopicDisallowed,
+    BadCertificate,
+    BadCertificateEnvironment,
+    ExpiredProviderToken,
+    Forbidden,
+    InvalidProviderToken,
+    MissingProviderToken,
+    BadPath,
+    MethodNotAllowed,
+    Unregistered,
+    TooManyProviderTokenUpdates,
+    TooManyRequests,
+    InternalServerError,
+    ServiceUnavailable,
+    Shutdown,
+    Unknown
+}
